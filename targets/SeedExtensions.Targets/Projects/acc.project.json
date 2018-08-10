@@ -1,0 +1,22 @@
+﻿{
+  "name": "acc",
+  "steps": [
+    {
+      "name": "feature",
+      "disable": [],
+      "enable": [
+        "SeedModules.Admin",
+        "SeedModules.Features",
+        "SeedModules.Acc"
+      ]
+    },
+    {
+      "name": "settings",
+      "HomeRoute": {
+        "Area": "SeedModules.Admin",
+        "Controller": "Home",
+        "Action": "Index"
+      }
+    }
+  ]
+}
