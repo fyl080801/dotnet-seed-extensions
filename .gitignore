@@ -249,6 +249,6 @@ node_modules
 publish
 
 # seed build
-*/Seed/App_Data/
-*/Seed/modules/
-*/Seed/extensions/
+*/SeedExtensions/App_Data/
+*/SeedExtensions/modules/
+*/SeedExtensions/extensions/
