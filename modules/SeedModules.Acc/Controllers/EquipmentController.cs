@@ -23,10 +23,16 @@ namespace SeedModules.Acc.Controllers
             _db = db;
         }
 
-        [HttpGet("categories")]
-        public IEnumerable<EquipmentCategory> Categories()
+        [HttpGet("categories/{parent?}"), HandleResult]
+        public IEnumerable<EquipmentCategory> Categories(int? parent)
         {
-            return _db.Set<EquipmentCategory>().Select(e => new EquipmentCategory()
+            var query = _db.Set<EquipmentCategory>().AsQueryable();
+            if (parent.HasValue)
+            {
+                query = query.Where(e => e.ParentId == parent);
+            }
+
+            return query.Select(e => new EquipmentCategory()
             {
                 Id = e.Id,
                 Name = e.Name,
@@ -34,7 +40,7 @@ namespace SeedModules.Acc.Controllers
             }).ToArray();
         }
 
-        [HttpGet("categories/{category}/types")]
+        [HttpGet("categories/{category}/types"), HandleResult]
         public IEnumerable<EquipmentType> EquipmentTypes(int category)
         {
             return _db.Set<EquipmentType>().Where(e => e.CategoryId == category)
@@ -48,13 +54,13 @@ namespace SeedModules.Acc.Controllers
                 .ToArray();
         }
 
-        [HttpGet("types/{id}")]
+        [HttpGet("types/{id}"), HandleResult]
         public EquipmentType GetType(int id)
         {
             return _db.Set<EquipmentType>().Find(id);
         }
 
-        [HttpPut("types")]
+        [HttpPut("types"), HandleResult]
         public void SaveType([FromBody]EquipmentType model)
         {
             var set = _db.Set<EquipmentType>();
@@ -71,7 +77,7 @@ namespace SeedModules.Acc.Controllers
             _db.SaveChanges();
         }
 
-        [HttpDelete("types/{id}")]
+        [HttpDelete("types/{id}"), HandleResult]
         public void DeleteType(int id)
         {
             var set = _db.Set<EquipmentType>();
@@ -95,7 +101,9 @@ namespace SeedModules.Acc.Controllers
             }
             else
             {
-                set.Update(model);
+                domain.Name = model.Name;
+                domain.ParentId = model.ParentId;
+                set.Update(domain);
             }
             _db.SaveChanges();
         }
