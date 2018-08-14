@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using Seed.Data;
 using Seed.Mvc.Extensions;
 using Seed.Mvc.Filters;
@@ -23,6 +24,24 @@ namespace SeedModules.Acc.Controllers
             _db = db;
         }
 
+        [HttpGet("allcategories"), HandleResult]
+        public IEnumerable<EquipmentCategory> AllCategory()
+        {
+            var query = _db.Set<EquipmentCategory>().Select(e => new EquipmentCategory
+            {
+                EquipmentTypes = e.EquipmentTypes.Select(t => new EquipmentType()
+                {
+                    CategoryId = t.CategoryId,
+                    Id = t.Id,
+                    Name = t.Name
+                }).ToList(),
+                Name = e.Name,
+                ParentId = e.ParentId
+            });
+
+            return query.ToList();
+        }
+
         [HttpGet("categories/{parent?}"), HandleResult]
         public IEnumerable<EquipmentCategory> Categories(int? parent)
         {
@@ -38,6 +57,18 @@ namespace SeedModules.Acc.Controllers
                 Name = e.Name,
                 ParentId = e.ParentId
             }).ToArray();
+        }
+
+        [HttpDelete("categories/{id}"), HandleResult]
+        public void DeleteCategory(int id)
+        {
+            var set = _db.Set<EquipmentCategory>();
+            var domain = set.Find(id);
+            if (domain != null)
+            {
+                set.Remove(domain);
+            }
+            _db.SaveChanges();
         }
 
         [HttpGet("categories/{category}/types"), HandleResult]
@@ -150,9 +181,19 @@ namespace SeedModules.Acc.Controllers
         }
 
         [HttpGet("{id}"), HandleResult]
-        public Equipment GetById(int id)
+        public object GetById(int id)
         {
-            return _db.Set<Equipment>().Find(id);
+            return _db.Set<Equipment>().Where(e => e.Id == id).Select(e => new
+            {
+                CabinCode = e.CabinCode,
+                CabinName = e.CabinName,
+                Code = e.Code,
+                Id = e.Id,
+                Name = e.Name,
+                Properties = e.Properties,
+                TypeName = e.Type.Name,
+                TypeId = e.TypeId
+            }).FirstOrDefault();
         }
 
         [HttpDelete("{id}"), HandleResult]
@@ -185,6 +226,7 @@ namespace SeedModules.Acc.Controllers
                 CabinCode = e.CabinCode,
                 CabinName = e.CabinName,
                 TypeId = e.TypeId,
+                Type = new EquipmentType() { Name = e.Type.Name },
                 Code = e.Code,
                 Name = e.Name
             });

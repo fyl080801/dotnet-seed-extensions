@@ -24,6 +24,8 @@ namespace SeedModules.Acc.Domain
 
         [ForeignKey("ParentId")]
         public virtual EquipmentCategory Parent { get; set; }
+
+        public virtual ICollection<EquipmentType> EquipmentTypes { get; set; } = new HashSet<EquipmentType>();
     }
 
     public class EquipmentCategoryTypeConfiguration : IEntityTypeConfiguration<EquipmentCategory>
