@@ -207,6 +207,12 @@ namespace SeedModules.Acc.Controllers
             }
         }
 
+        [HttpGet("types/{type}/equipments"), HandleResult]
+        public IEnumerable<Equipment> ListByType(int type)
+        {
+            return _db.Set<Equipment>().Where(e => e.TypeId == type).ToArray();
+        }
+
         [HttpPost("query"), HandleResult]
         public PagedResult<Equipment> List([FromBody]EquipmentQueryModel model, [FromQuery]int page, [FromQuery]int count)
         {
