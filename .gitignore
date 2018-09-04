@@ -243,7 +243,6 @@ ModelManifest.xml
 /package-lock.json
 
 # reference
-lib
 bower_components
 node_modules
 publish

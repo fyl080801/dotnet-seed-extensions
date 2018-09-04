@@ -92,6 +92,10 @@ var resolveConfigs = function(modulePaths, moduleOptions, ext) {
           );
         moduleOptions.include.push(name);
       }
+
+      if (option.configs[name].shim && option.configs[name].shim.pack) {
+        moduleOptions.shim[name] = option.configs[name].shim;
+      }
     }
   });
 };
@@ -128,6 +132,7 @@ gulp.task('build', function() {
       removeCombined: true,
       fileExclusionRegExp: /^\./,
       paths: {},
+      shim: {},
       exclude: [],
       include: []
     };
@@ -178,7 +183,7 @@ gulp.task('build', function() {
       .replace(/\\/g, '.');
     var targetPath = path.join(
       folder.substring(0, folder.lastIndexOf(path.join('/modules', ''))),
-      'js'
+      'dist'
     );
     var requireName = path.join(sortpath, 'requires').replace(/\\/g, '/');
     var moduleName = path.join(sortpath, 'module').replace(/\\/g, '/');

@@ -1,0 +1,13 @@
+{
+  "configs": {
+    "SeedModules.AdminPro/modules/admin/module": {
+      "path": "SeedModules.AdminPro/dist/modules.admin.module",
+      "shim": {
+        "deps": ["app/application"]
+      }
+    },
+    "SeedModules.AdminPro/modules/admin/requires": {
+      "path": "SeedModules.AdminPro/dist/modules.admin.requires"
+    }
+  }
+}
