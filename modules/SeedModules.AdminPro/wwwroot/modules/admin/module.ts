@@ -1,6 +1,8 @@
 ﻿import angular = require('angular');
 import 'app/application';
 import 'angular-ui-router';
+import 'SeedModules.AdminPro/modules/admin/configs/admin';
+import 'SeedModules.AdminPro/modules/admin/directives/body';
 
 class ModuleClass {
   static $inject = ['$stateProvider', '$urlRouterProvider'];
@@ -32,4 +34,6 @@ class ModuleClass {
   }
 }
 
-export = angular.module('modules.proadmin', ['ui.router']).config(ModuleClass);
+export = angular
+  .module('modules.adminpro', ['modules.adminpro.boot'])
+  .config(ModuleClass);

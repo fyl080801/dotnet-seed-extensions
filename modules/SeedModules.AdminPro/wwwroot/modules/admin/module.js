@@ -1,4 +1,4 @@
-define(["require", "exports", "angular", "app/application", "angular-ui-router"], function (require, exports, angular) {
+define(["require", "exports", "angular", "app/application", "angular-ui-router", "SeedModules.AdminPro/modules/admin/configs/admin", "SeedModules.AdminPro/modules/admin/directives/body"], function (require, exports, angular) {
     "use strict";
     var ModuleClass = (function () {
         function ModuleClass($stateProvider, $urlRouterProvider) {
@@ -23,6 +23,8 @@ define(["require", "exports", "angular", "app/application", "angular-ui-router"]
         ModuleClass.$inject = ['$stateProvider', '$urlRouterProvider'];
         return ModuleClass;
     }());
-    return angular.module('modules.proadmin', ['ui.router']).config(ModuleClass);
+    return angular
+        .module('modules.adminpro', ['modules.adminpro.boot'])
+        .config(ModuleClass);
 });
 //# sourceMappingURL=module.js.map
