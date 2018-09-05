@@ -8,15 +8,27 @@ class ModuleClass {
     $stateProvider: app.configs.IRequireStateProvider,
     $urlRouterProvider: ng.ui.IUrlRouterProvider
   ) {
-    // $urlRouterProvider.otherwise('/login');
-    // $stateProvider.state('login', {
-    //   url: '/login',
-    //   templateUrl: '/SeedModules.AdminPro/modules/login/views/login.html',
-    //   requires: [
-    //     'SeedModules.AngularUI/modules/requires',
-    //     'SeedModules.AdminPro/modules/login/requires'
-    //   ]
-    // });
+    $urlRouterProvider.otherwise('/admin/dashboard');
+
+    $stateProvider.state('admin', {
+      url: '/admin',
+      templateUrl:
+        '/SeedModules.AdminPro/modules/admin/components/layout/view.html',
+      requires: [
+        'SeedModules.AngularUI/modules/requires',
+        'SeedModules.AdminPro/modules/admin/requires'
+      ]
+    });
+
+    $stateProvider.state('admin.dashboard', {
+      url: '/dashboard',
+      templateUrl:
+        '/SeedModules.AdminPro/modules/admin/components/dashboard/view.html',
+      requires: [
+        'SeedModules.AngularUI/modules/requires',
+        'SeedModules.AdminPro/modules/admin/requires'
+      ]
+    });
   }
 }
 

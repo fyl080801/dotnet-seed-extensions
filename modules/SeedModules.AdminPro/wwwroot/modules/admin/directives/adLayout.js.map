@@ -1,0 +1,1 @@
+{"version":3,"file":"adLayout.js","sourceRoot":"","sources":["adLayout.ts"],"names":[],"mappings":";;;IAEA;QACE,OAAO;YACL,IAAI,EAAE;gBACJ,IAAI,EAAE,UACJ,KAAU,EACV,eAAuB,EACvB,kBAAkC;gBAGpC,CAAC;aACF;SACF,CAAC;IACJ,CAAC;IAED,SAAS,CAAC,OAAO,GAAG,EAAE,CAAC;IAEvB,GAAG,CAAC,SAAS,CAAC,UAAU,EAAE,SAAS,CAAC,CAAC"}

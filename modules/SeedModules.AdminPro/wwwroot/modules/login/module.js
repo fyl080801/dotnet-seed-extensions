@@ -15,6 +15,8 @@ define(["require", "exports", "angular", "app/application", "angular-ui-router"]
         ModuleClass.$inject = ['$stateProvider', '$urlRouterProvider'];
         return ModuleClass;
     }());
-    return angular.module('modules.prologin', ['ui.router']).config(ModuleClass);
+    return angular
+        .module('modules.adminpro.login', ['ui.router'])
+        .config(ModuleClass);
 });
 //# sourceMappingURL=module.js.map

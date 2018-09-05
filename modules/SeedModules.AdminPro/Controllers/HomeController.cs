@@ -14,11 +14,12 @@ namespace SeedModules.AdminPro.Controllers
         [Authorize]
         [GenerateAntiforgeryTokenCookie]
         [RouteRequires(
-            "rcss!SeedModules.Admin/less/seed-admin.css",
+            "rcss!SeedModules.AdminPro/less/module.css",
             "rcss!SeedModules.AdminPro/lib/googleapis-fonts/fonts.css",
             "rcss!SeedModules.AdminPro/lib/Ionicons/css/ionicons.min.css",
             "rcss!SeedModules.AdminPro/css/AdminLTE.min.css",
-            "rcss!SeedModules.AdminPro/css/skins/_all-skins.min.css"
+            "rcss!SeedModules.AdminPro/css/skins/_all-skins.min.css",
+            "SeedModules.AdminPro/modules/admin/module"
         )]
         public IActionResult Index()
         {
@@ -27,7 +28,7 @@ namespace SeedModules.AdminPro.Controllers
 
         [GenerateAntiforgeryTokenCookie]
         [RouteRequires(
-            "rcss!SeedModules.Admin/less/seed-admin.css",
+            "rcss!SeedModules.AdminPro/less/module.css",
             "rcss!SeedModules.AdminPro/lib/googleapis-fonts/fonts.css",
             "rcss!SeedModules.AdminPro/lib/Ionicons/css/ionicons.min.css",
             "rcss!SeedModules.AdminPro/css/AdminLTE.min.css",

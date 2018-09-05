@@ -21,4 +21,6 @@ class ModuleClass {
   }
 }
 
-export = angular.module('modules.prologin', ['ui.router']).config(ModuleClass);
+export = angular
+  .module('modules.adminpro.login', ['ui.router'])
+  .config(ModuleClass);
