@@ -10,5 +10,11 @@ define(["require", "exports", "SeedModules.AdminPro/modules/admin/boot"], functi
         expandOnHover: false,
         expandTransitionDelay: 200
     });
+    boot.constant('$treeOptions', {
+        animationSpeed: 500,
+        accordion: true,
+        followLink: false,
+        trigger: '.treeview a'
+    });
 });
 //# sourceMappingURL=admin.js.map

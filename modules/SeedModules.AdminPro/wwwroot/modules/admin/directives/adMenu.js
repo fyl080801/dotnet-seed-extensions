@@ -30,43 +30,44 @@ define(["require", "exports", "SeedModules.AdminPro/modules/admin/module"], func
         expanded: 'expanded.pushMenu',
         collapsed: 'collapsed.pushMenu'
     };
-    var PushMenu = function (options) {
-        this.options = options;
-        this.init();
-    };
-    function directive($menuOptions) {
-        function init(instanceElement) {
-            if ($menuOptions.expandOnHover ||
+    var Menu = (function () {
+        function Menu(element, options) {
+            this.element = element;
+            this.options = options;
+        }
+        Menu.prototype.init = function () {
+            var $this = this;
+            if (this.options.expandOnHover ||
                 $('body').is(Selector.mini + Selector.layoutFixed)) {
-                expandOnHover(instanceElement);
+                this.expandOnHover();
                 $('body').addClass(ClassName.expandFeature);
             }
             $(Selector.contentWrapper).click(function () {
-                if ($(window).width() <= $menuOptions.collapseScreenSize &&
+                if ($(window).width() <= $this.options.collapseScreenSize &&
                     $('body').hasClass(ClassName.open)) {
-                    close();
+                    $this.close();
                 }
-            }.bind(instanceElement));
+            }.bind(this.element));
             $(Selector.searchInput).click(function (e) {
                 e.stopPropagation();
             });
-        }
-        function toggle() {
+        };
+        Menu.prototype.toggle = function () {
             var windowWidth = $(window).width();
             var isOpen = !$('body').hasClass(ClassName.collapsed);
-            if (windowWidth <= $menuOptions.collapseScreenSize) {
+            if (windowWidth <= this.options.collapseScreenSize) {
                 isOpen = $('body').hasClass(ClassName.open);
             }
             if (!isOpen) {
-                open();
+                this.open();
             }
             else {
-                close();
+                this.close();
             }
-        }
-        function open() {
+        };
+        Menu.prototype.open = function () {
             var windowWidth = $(window).width();
-            if (windowWidth > $menuOptions.collapseScreenSize) {
+            if (windowWidth > this.options.collapseScreenSize) {
                 $('body')
                     .removeClass(ClassName.collapsed)
                     .trigger($.Event(Event.expanded));
@@ -76,10 +77,10 @@ define(["require", "exports", "SeedModules.AdminPro/modules/admin/module"], func
                     .addClass(ClassName.open)
                     .trigger($.Event(Event.expanded));
             }
-        }
-        function close() {
+        };
+        Menu.prototype.close = function () {
             var windowWidth = $(window).width();
-            if (windowWidth > $menuOptions.collapseScreenSize) {
+            if (windowWidth > this.options.collapseScreenSize) {
                 $('body')
                     .addClass(ClassName.collapsed)
                     .trigger($.Event(Event.collapsed));
@@ -89,40 +90,42 @@ define(["require", "exports", "SeedModules.AdminPro/modules/admin/module"], func
                     .removeClass(ClassName.open + ' ' + ClassName.collapsed)
                     .trigger($.Event(Event.collapsed));
             }
-        }
-        function expandOnHover(instanceElement) {
+        };
+        Menu.prototype.expandOnHover = function () {
+            var $this = this;
             $(Selector.mainSidebar).hover(function () {
                 if ($('body').is(Selector.mini + Selector.collapsed) &&
-                    $(window).width() > $menuOptions.collapseScreenSize) {
-                    expand();
+                    $(window).width() > $this.options.collapseScreenSize) {
+                    $this.expand();
                 }
-            }.bind(instanceElement), function () {
+            }.bind(this.element), function () {
                 if ($('body').is(Selector.expanded)) {
-                    collapse();
+                    $this.collapse();
                 }
-            }.bind(instanceElement));
-        }
-        function expand() {
+            }.bind(this.element));
+        };
+        Menu.prototype.expand = function () {
             setTimeout(function () {
                 $('body')
                     .removeClass(ClassName.collapsed)
                     .addClass(ClassName.expanded);
-            }, $menuOptions.expandTransitionDelay);
-        }
-        function collapse() {
+            }, this.options.expandTransitionDelay);
+        };
+        Menu.prototype.collapse = function () {
             setTimeout(function () {
                 $('body')
                     .removeClass(ClassName.expanded)
                     .addClass(ClassName.collapsed);
-            }, $menuOptions.expandTransitionDelay);
-        }
+            }, this.options.expandTransitionDelay);
+        };
+        return Menu;
+    }());
+    function directive($menuOptions) {
         return {
             replace: false,
             restrict: 'A',
-            link: {
-                post: function (scope, instanceElement, instanceAttributes) {
-                    init(instanceElement);
-                }
+            link: function (scope, instanceElement, instanceAttributes) {
+                new Menu(instanceElement, $.extend(Default, $menuOptions)).init();
             }
         };
     }

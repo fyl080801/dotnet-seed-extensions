@@ -34,20 +34,17 @@ var Event = {
   collapsed: 'collapsed.pushMenu'
 };
 
-// PushMenu Class Definition
-// =========================
-var PushMenu = function(options) {
-  this.options = options;
-  this.init();
-};
+class Menu {
+  constructor(private element: JQLite, private options) {}
 
-function directive($menuOptions): ng.IDirective {
-  function init(instanceElement: JQLite) {
+  init() {
+    var $this = this;
+
     if (
-      $menuOptions.expandOnHover ||
+      this.options.expandOnHover ||
       $('body').is(Selector.mini + Selector.layoutFixed)
     ) {
-      expandOnHover(instanceElement);
+      this.expandOnHover();
       $('body').addClass(ClassName.expandFeature);
     }
 
@@ -55,39 +52,39 @@ function directive($menuOptions): ng.IDirective {
       function() {
         // Enable hide menu when clicking on the content-wrapper on small screens
         if (
-          $(window).width() <= $menuOptions.collapseScreenSize &&
+          $(window).width() <= $this.options.collapseScreenSize &&
           $('body').hasClass(ClassName.open)
         ) {
-          close();
+          $this.close();
         }
-      }.bind(instanceElement)
+      }.bind(this.element)
     );
 
     // __Fix for android devices
-    $(Selector.searchInput).click(e => {
+    $(Selector.searchInput).click(function(e) {
       e.stopPropagation();
     });
   }
 
-  function toggle() {
+  toggle() {
     var windowWidth = $(window).width();
     var isOpen = !$('body').hasClass(ClassName.collapsed);
 
-    if (windowWidth <= $menuOptions.collapseScreenSize) {
+    if (windowWidth <= this.options.collapseScreenSize) {
       isOpen = $('body').hasClass(ClassName.open);
     }
 
     if (!isOpen) {
-      open();
+      this.open();
     } else {
-      close();
+      this.close();
     }
   }
 
-  function open() {
+  open() {
     var windowWidth = $(window).width();
 
-    if (windowWidth > $menuOptions.collapseScreenSize) {
+    if (windowWidth > this.options.collapseScreenSize) {
       $('body')
         .removeClass(ClassName.collapsed)
         .trigger($.Event(Event.expanded));
@@ -98,9 +95,9 @@ function directive($menuOptions): ng.IDirective {
     }
   }
 
-  function close() {
+  close() {
     var windowWidth = $(window).width();
-    if (windowWidth > $menuOptions.collapseScreenSize) {
+    if (windowWidth > this.options.collapseScreenSize) {
       $('body')
         .addClass(ClassName.collapsed)
         .trigger($.Event(Event.collapsed));
@@ -111,51 +108,53 @@ function directive($menuOptions): ng.IDirective {
     }
   }
 
-  function expandOnHover(instanceElement: JQLite) {
+  expandOnHover() {
+    var $this = this;
+
     $(Selector.mainSidebar).hover(
       function() {
         if (
           $('body').is(Selector.mini + Selector.collapsed) &&
-          $(window).width() > $menuOptions.collapseScreenSize
+          $(window).width() > $this.options.collapseScreenSize
         ) {
-          expand();
+          $this.expand();
         }
-      }.bind(instanceElement),
+      }.bind(this.element),
       function() {
         if ($('body').is(Selector.expanded)) {
-          collapse();
+          $this.collapse();
         }
-      }.bind(instanceElement)
+      }.bind(this.element)
     );
   }
 
-  function expand() {
+  expand() {
     setTimeout(function() {
       $('body')
         .removeClass(ClassName.collapsed)
         .addClass(ClassName.expanded);
-    }, $menuOptions.expandTransitionDelay);
+    }, this.options.expandTransitionDelay);
   }
 
-  function collapse() {
+  collapse() {
     setTimeout(function() {
       $('body')
         .removeClass(ClassName.expanded)
         .addClass(ClassName.collapsed);
-    }, $menuOptions.expandTransitionDelay);
+    }, this.options.expandTransitionDelay);
   }
+}
 
+function directive($menuOptions): ng.IDirective {
   return {
     replace: false,
     restrict: 'A',
-    link: {
-      post: (
-        scope: any,
-        instanceElement: JQLite,
-        instanceAttributes: ng.IAttributes
-      ) => {
-        init(instanceElement);
-      }
+    link: (
+      scope: any,
+      instanceElement: JQLite,
+      instanceAttributes: ng.IAttributes
+    ) => {
+      new Menu(instanceElement, $.extend(Default, $menuOptions)).init();
     }
   };
 }

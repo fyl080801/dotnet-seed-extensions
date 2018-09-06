@@ -10,3 +10,10 @@ boot.constant('$menuOptions', {
   expandOnHover: false,
   expandTransitionDelay: 200
 });
+
+boot.constant('$treeOptions', {
+  animationSpeed: 500,
+  accordion: true,
+  followLink: false,
+  trigger: '.treeview a'
+});
