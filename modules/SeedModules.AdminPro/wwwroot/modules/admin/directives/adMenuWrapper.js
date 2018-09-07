@@ -2,11 +2,6 @@ define(["require", "exports", "SeedModules.AdminPro/modules/admin/module"], func
     "use strict";
     exports.__esModule = true;
     var DataKey = 'lte.pushmenu';
-    var Default = {
-        collapseScreenSize: 767,
-        expandOnHover: false,
-        expandTransitionDelay: 200
-    };
     var Selector = {
         collapsed: '.sidebar-collapse',
         open: '.sidebar-open',

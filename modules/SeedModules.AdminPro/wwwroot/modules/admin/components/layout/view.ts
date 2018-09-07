@@ -23,17 +23,27 @@ class Controller {
     treeUtility
       .toTree([
         {
-          id: 'aaaa',
+          id: '1',
           icon: 'fa fa-tachometer-alt',
           title: '监控台'
         },
         {
-          id: 'bbb',
-          parentId: 'aaaa',
+          id: '11',
+          parentId: '1',
           title: '监控台1',
           click: () => {
             this.$state.go('admin.dashboard');
           }
+        },
+        {
+          id: '2',
+          icon: 'fa fa-tachometer-alt',
+          title: '分组1'
+        },
+        {
+          id: '22',
+          parentId: '2',
+          title: '监控台2'
         }
       ])
       .key('id')

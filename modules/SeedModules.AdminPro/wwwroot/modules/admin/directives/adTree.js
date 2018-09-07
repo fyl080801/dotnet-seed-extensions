@@ -12,6 +12,7 @@ define(["require", "exports", "SeedModules.AdminPro/modules/admin/boot"], functi
         active: '.active'
     };
     var ClassName = {
+        active: 'active',
         open: 'menu-open',
         tree: 'tree'
     };
@@ -47,6 +48,7 @@ define(["require", "exports", "SeedModules.AdminPro/modules/admin/boot"], functi
             parent.addClass(ClassName.open);
             tree.slideDown($treeOptions.animationSpeed, (function () {
                 $(element).trigger(expandedEvent);
+                parent.addClass(ClassName.active);
             }).bind(element));
         }
         function collapse(tree, parentLi) {
@@ -54,6 +56,7 @@ define(["require", "exports", "SeedModules.AdminPro/modules/admin/boot"], functi
             parentLi.removeClass(ClassName.open);
             tree.slideUp($treeOptions.animationSpeed, (function () {
                 $(element).trigger(collapsedEvent);
+                parentLi.removeClass(ClassName.active);
             }).bind(element));
         }
         function _setUpListeners() {
