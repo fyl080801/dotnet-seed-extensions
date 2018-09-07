@@ -85,10 +85,16 @@
       "shim": {
         "deps": ["jquery"]
       }
+    },
+    "jquery-slimscroll": {
+      "path": "SeedModules.AdminPro/lib/jquery-slimscroll/jquery.slimscroll.min",
+      "shim": {
+        "deps": ["jquery"]
+      }
     }
   },
   "patchs": ["es5-shim", "es5-sham", "html5shiv", "json2", "respond"],
-  "include": ["tv4", "objectpath"],
+  "include": ["tv4", "objectpath", "jquery-slimscroll"],
   "requires": [
     "app/application",
     "rcss!SeedModules.AngularUI/css/fontawesome-all.min.css",

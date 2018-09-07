@@ -13,6 +13,7 @@ define(["require", "exports", "angular", "app/application", "angular-ui-router",
             });
             $stateProvider.state('admin.dashboard', {
                 url: '/dashboard',
+                title: '首页',
                 templateUrl: '/SeedModules.AdminPro/modules/admin/components/dashboard/view.html',
                 requires: [
                     'SeedModules.AngularUI/modules/requires',

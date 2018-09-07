@@ -1,10 +1,6 @@
-define(["require", "exports", "SeedModules.AdminPro/modules/admin/boot", "SeedModules.AdminPro/lib/jquery-slimscroll/jquery.slimscroll.min"], function (require, exports, mod) {
+define(["require", "exports", "SeedModules.AdminPro/modules/admin/boot", "jquery-slimscroll"], function (require, exports, mod) {
     "use strict";
     exports.__esModule = true;
-    var Default = {
-        slimscroll: true,
-        resetHeight: true
-    };
     var Selector = {
         wrapper: '.wrapper',
         contentWrapper: '.content-wrapper',
@@ -21,51 +17,15 @@ define(["require", "exports", "SeedModules.AdminPro/modules/admin/boot", "SeedMo
         fixed: 'fixed',
         holdTransition: 'hold-transition'
     };
-    var Layout = (function () {
-        function Layout(options) {
-            this.options = options;
-            this.element = $('body');
-            this.bindedResize = false;
-        }
-        Layout.prototype.activate = function () {
-            var $this = this;
-            this.fix();
-            this.fixSidebar();
-            this.element.removeClass(ClassName.holdTransition);
-            if (this.options.resetHeight) {
-                $('body, html, ' + Selector.wrapper).css({
-                    height: 'auto',
-                    'min-height': '100%'
-                });
-            }
-            if (!this.bindedResize) {
-                $(window).resize(function () {
-                    $this.fix();
-                    $this.fixSidebar();
-                    $(Selector.logo + ', ' + Selector.sidebar).one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function () {
-                        $this.fix();
-                        $this.fixSidebar();
-                    }.bind($this.element));
-                }.bind($this.element));
-                this.bindedResize = true;
-            }
-            $(Selector.sidebarMenu).on('expanded.tree', function () {
-                $this.fix();
-                $this.fixSidebar();
-            }.bind(this.element));
-            $(Selector.sidebarMenu).on('collapsed.tree', function () {
-                $this.fix();
-                $this.fixSidebar();
-            }.bind(this.element));
-        };
-        Layout.prototype.fix = function () {
+    function directive($layoutOptions) {
+        function fix(element) {
             $(Selector.layoutBoxed + ' > ' + Selector.wrapper).css('overflow', 'hidden');
             var footerHeight = $(Selector.mainFooter).outerHeight() || 0;
             var headerHeight = $(Selector.mainHeader).outerHeight() || 0;
             var neg = headerHeight + footerHeight;
             var windowHeight = $(window).height();
             var sidebarHeight = $(Selector.sidebar).height() || 0;
-            if (this.element.hasClass(ClassName.fixed)) {
+            if (element.hasClass(ClassName.fixed)) {
                 $(Selector.contentWrapper).css('min-height', windowHeight - footerHeight);
             }
             else {
@@ -84,8 +44,8 @@ define(["require", "exports", "SeedModules.AdminPro/modules/admin/boot", "SeedMo
                         $(Selector.contentWrapper).css('min-height', $controlSidebar.height());
                 }
             }
-        };
-        Layout.prototype.fixSidebar = function () {
+        }
+        function fixSidebar() {
             if (!$('body').hasClass(ClassName.fixed)) {
                 if (typeof $.fn['slimScroll'] !== 'undefined') {
                     $(Selector.sidebar)['slimScroll']({ destroy: true })
@@ -93,23 +53,47 @@ define(["require", "exports", "SeedModules.AdminPro/modules/admin/boot", "SeedMo
                 }
                 return;
             }
-            if (this.options.slimscroll) {
+            if ($layoutOptions.slimscroll) {
                 if (typeof $.fn['slimScroll'] !== 'undefined') {
                     $(Selector.sidebar)['slimScroll']({
                         height: $(window).height() - $(Selector.mainHeader).height() + 'px'
                     });
                 }
             }
-        };
-        return Layout;
-    }());
-    function directive($layoutOptions) {
+        }
+        var bindedResize = false;
         return {
             replace: false,
             restrict: 'E',
             link: function (scope, instanceElement, instanceAttributes) {
-                instanceElement.addClass('hold-transition skin-blue sidebar-mini fixed');
-                new Layout($.extend(Default, $layoutOptions)).activate();
+                instanceElement.addClass('skin-blue sidebar-mini fixed');
+                fix(instanceElement);
+                fixSidebar();
+                if ($layoutOptions.resetHeight) {
+                    $('body, html, ' + Selector.wrapper).css({
+                        height: 'auto',
+                        'min-height': '100%'
+                    });
+                }
+                if (!bindedResize) {
+                    $(window).resize((function () {
+                        fix(instanceElement);
+                        fixSidebar();
+                        $(Selector.logo + ', ' + Selector.sidebar).one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', (function () {
+                            fix(instanceElement);
+                            fixSidebar();
+                        }).bind(instanceElement));
+                    }).bind(instanceElement));
+                    bindedResize = true;
+                }
+                $(Selector.sidebarMenu).on('expanded.tree', (function () {
+                    fix(instanceElement);
+                    fixSidebar();
+                }).bind(instanceElement));
+                $(Selector.sidebarMenu).on('collapsed.tree', (function () {
+                    fix(instanceElement);
+                    fixSidebar();
+                }).bind(instanceElement));
             }
         };
     }

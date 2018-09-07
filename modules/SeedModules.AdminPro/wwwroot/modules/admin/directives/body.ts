@@ -1,12 +1,7 @@
 import mod = require('SeedModules.AdminPro/modules/admin/boot');
-import 'SeedModules.AdminPro/lib/jquery-slimscroll/jquery.slimscroll.min';
+import 'jquery-slimscroll';
 
 //var DataKey = 'lte.layout';
-
-var Default = {
-  slimscroll: true,
-  resetHeight: true
-};
 
 var Selector = {
   wrapper: '.wrapper',
@@ -26,63 +21,8 @@ var ClassName = {
   holdTransition: 'hold-transition'
 };
 
-class Layout {
-  private element = $('body');
-  private bindedResize: boolean = false;
-  constructor(private options) {}
-
-  activate() {
-    var $this = this;
-
-    this.fix();
-    this.fixSidebar();
-
-    this.element.removeClass(ClassName.holdTransition);
-
-    if (this.options.resetHeight) {
-      $('body, html, ' + Selector.wrapper).css({
-        height: 'auto',
-        'min-height': '100%'
-      });
-    }
-
-    if (!this.bindedResize) {
-      $(window).resize(
-        function() {
-          $this.fix();
-          $this.fixSidebar();
-
-          $(Selector.logo + ', ' + Selector.sidebar).one(
-            'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend',
-            function() {
-              $this.fix();
-              $this.fixSidebar();
-            }.bind($this.element)
-          );
-        }.bind($this.element)
-      );
-
-      this.bindedResize = true;
-    }
-
-    $(Selector.sidebarMenu).on(
-      'expanded.tree',
-      function() {
-        $this.fix();
-        $this.fixSidebar();
-      }.bind(this.element)
-    );
-
-    $(Selector.sidebarMenu).on(
-      'collapsed.tree',
-      function() {
-        $this.fix();
-        $this.fixSidebar();
-      }.bind(this.element)
-    );
-  }
-
-  fix() {
+function directive($layoutOptions): ng.IDirective {
+  function fix(element) {
     // Remove overflow from .wrapper if layout-boxed exists
     $(Selector.layoutBoxed + ' > ' + Selector.wrapper).css(
       'overflow',
@@ -98,7 +38,7 @@ class Layout {
 
     // Set the min-height of the content and sidebar based on
     // the height of the document.
-    if (this.element.hasClass(ClassName.fixed)) {
+    if (element.hasClass(ClassName.fixed)) {
       $(Selector.contentWrapper).css('min-height', windowHeight - footerHeight);
     } else {
       var postSetHeight;
@@ -123,7 +63,7 @@ class Layout {
     }
   }
 
-  fixSidebar() {
+  function fixSidebar() {
     // Make sure the body tag has the .fixed class
     if (!$('body').hasClass(ClassName.fixed)) {
       if (typeof $.fn['slimScroll'] !== 'undefined') {
@@ -135,7 +75,7 @@ class Layout {
     }
 
     // Enable slimscroll for fixed layout
-    if (this.options.slimscroll) {
+    if ($layoutOptions.slimscroll) {
       if (typeof $.fn['slimScroll'] !== 'undefined') {
         // Destroy if it exists
         // $(Selector.sidebar).slimScroll({ destroy: true }).height('auto')
@@ -147,9 +87,9 @@ class Layout {
       }
     }
   }
-}
 
-function directive($layoutOptions): ng.IDirective {
+  var bindedResize = false;
+
   return {
     replace: false,
     restrict: 'E',
@@ -158,8 +98,52 @@ function directive($layoutOptions): ng.IDirective {
       instanceElement: JQLite,
       instanceAttributes: ng.IAttributes
     ) => {
-      instanceElement.addClass('hold-transition skin-blue sidebar-mini fixed');
-      new Layout($.extend(Default, $layoutOptions)).activate();
+      instanceElement.addClass('skin-blue sidebar-mini fixed');
+
+      fix(instanceElement);
+      fixSidebar();
+
+      if ($layoutOptions.resetHeight) {
+        $('body, html, ' + Selector.wrapper).css({
+          height: 'auto',
+          'min-height': '100%'
+        });
+      }
+
+      if (!bindedResize) {
+        $(window).resize(
+          (() => {
+            fix(instanceElement);
+            fixSidebar();
+
+            $(Selector.logo + ', ' + Selector.sidebar).one(
+              'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend',
+              (() => {
+                fix(instanceElement);
+                fixSidebar();
+              }).bind(instanceElement)
+            );
+          }).bind(instanceElement)
+        );
+
+        bindedResize = true;
+      }
+
+      $(Selector.sidebarMenu).on(
+        'expanded.tree',
+        (() => {
+          fix(instanceElement);
+          fixSidebar();
+        }).bind(instanceElement)
+      );
+
+      $(Selector.sidebarMenu).on(
+        'collapsed.tree',
+        (() => {
+          fix(instanceElement);
+          fixSidebar();
+        }).bind(instanceElement)
+      );
     }
   };
 }

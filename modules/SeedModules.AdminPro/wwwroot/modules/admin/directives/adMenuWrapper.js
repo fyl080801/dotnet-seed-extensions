@@ -30,32 +30,35 @@ define(["require", "exports", "SeedModules.AdminPro/modules/admin/module"], func
         expanded: 'expanded.pushMenu',
         collapsed: 'collapsed.pushMenu'
     };
-    var Menu = (function () {
-        function Menu(element, options) {
+    var MenuWrapper = (function () {
+        function MenuWrapper(element, $menuOptions, option) {
             this.element = element;
-            this.options = options;
+            this.$menuOptions = $menuOptions;
+            if (option === 'toggle')
+                this.toggle();
+            this.init();
         }
-        Menu.prototype.init = function () {
-            var $this = this;
-            if (this.options.expandOnHover ||
+        MenuWrapper.prototype.init = function () {
+            var _this = this;
+            if (this.$menuOptions.expandOnHover ||
                 $('body').is(Selector.mini + Selector.layoutFixed)) {
                 this.expandOnHover();
                 $('body').addClass(ClassName.expandFeature);
             }
-            $(Selector.contentWrapper).click(function () {
-                if ($(window).width() <= $this.options.collapseScreenSize &&
+            $(Selector.contentWrapper).click((function () {
+                if ($(window).width() <= _this.$menuOptions.collapseScreenSize &&
                     $('body').hasClass(ClassName.open)) {
-                    $this.close();
+                    _this.close();
                 }
-            }.bind(this.element));
+            }).bind(this.element));
             $(Selector.searchInput).click(function (e) {
                 e.stopPropagation();
             });
         };
-        Menu.prototype.toggle = function () {
+        MenuWrapper.prototype.toggle = function () {
             var windowWidth = $(window).width();
             var isOpen = !$('body').hasClass(ClassName.collapsed);
-            if (windowWidth <= this.options.collapseScreenSize) {
+            if (windowWidth <= this.$menuOptions.collapseScreenSize) {
                 isOpen = $('body').hasClass(ClassName.open);
             }
             if (!isOpen) {
@@ -65,9 +68,9 @@ define(["require", "exports", "SeedModules.AdminPro/modules/admin/module"], func
                 this.close();
             }
         };
-        Menu.prototype.open = function () {
+        MenuWrapper.prototype.open = function () {
             var windowWidth = $(window).width();
-            if (windowWidth > this.options.collapseScreenSize) {
+            if (windowWidth > this.$menuOptions.collapseScreenSize) {
                 $('body')
                     .removeClass(ClassName.collapsed)
                     .trigger($.Event(Event.expanded));
@@ -78,9 +81,9 @@ define(["require", "exports", "SeedModules.AdminPro/modules/admin/module"], func
                     .trigger($.Event(Event.expanded));
             }
         };
-        Menu.prototype.close = function () {
+        MenuWrapper.prototype.close = function () {
             var windowWidth = $(window).width();
-            if (windowWidth > this.options.collapseScreenSize) {
+            if (windowWidth > this.$menuOptions.collapseScreenSize) {
                 $('body')
                     .addClass(ClassName.collapsed)
                     .trigger($.Event(Event.collapsed));
@@ -91,45 +94,54 @@ define(["require", "exports", "SeedModules.AdminPro/modules/admin/module"], func
                     .trigger($.Event(Event.collapsed));
             }
         };
-        Menu.prototype.expandOnHover = function () {
-            var $this = this;
-            $(Selector.mainSidebar).hover(function () {
+        MenuWrapper.prototype.expandOnHover = function () {
+            var _this = this;
+            $(Selector.mainSidebar).hover((function () {
                 if ($('body').is(Selector.mini + Selector.collapsed) &&
-                    $(window).width() > $this.options.collapseScreenSize) {
-                    $this.expand();
+                    $(window).width() > _this.$menuOptions.collapseScreenSize) {
+                    _this.expand();
                 }
-            }.bind(this.element), function () {
+            }).bind(this.element), (function () {
                 if ($('body').is(Selector.expanded)) {
-                    $this.collapse();
+                    _this.collapse();
                 }
-            }.bind(this.element));
+            }).bind(this.element));
         };
-        Menu.prototype.expand = function () {
+        MenuWrapper.prototype.expand = function () {
             setTimeout(function () {
                 $('body')
                     .removeClass(ClassName.collapsed)
                     .addClass(ClassName.expanded);
-            }, this.options.expandTransitionDelay);
+            }, this.$menuOptions.expandTransitionDelay);
         };
-        Menu.prototype.collapse = function () {
+        MenuWrapper.prototype.collapse = function () {
             setTimeout(function () {
                 $('body')
                     .removeClass(ClassName.expanded)
                     .addClass(ClassName.collapsed);
-            }, this.options.expandTransitionDelay);
+            }, this.$menuOptions.expandTransitionDelay);
         };
-        return Menu;
+        return MenuWrapper;
     }());
     function directive($menuOptions) {
         return {
             replace: false,
             restrict: 'A',
+            scope: {
+                option: '@adMenuWrapper'
+            },
             link: function (scope, instanceElement, instanceAttributes) {
-                new Menu(instanceElement, $.extend(Default, $menuOptions)).init();
+                $(document).on('click', Selector.button, function (e) {
+                    e.preventDefault();
+                    $(this).each(function () {
+                        new MenuWrapper($(this), $menuOptions, 'toggle');
+                    });
+                });
+                new MenuWrapper(instanceElement.find(Selector.button), $menuOptions, scope.option);
             }
         };
     }
     directive.$inject = ['$menuOptions'];
-    mod.directive('adMenu', directive);
+    mod.directive('adMenuWrapper', directive);
 });
-//# sourceMappingURL=adMenu.js.map
+//# sourceMappingURL=adMenuWrapper.js.map

@@ -34,14 +34,15 @@ var Event = {
   collapsed: 'collapsed.pushMenu'
 };
 
-class Menu {
-  constructor(private element: JQLite, private options) {}
+class MenuWrapper {
+  constructor(private element, private $menuOptions, option) {
+    if (option === 'toggle') this.toggle();
+    this.init();
+  }
 
   init() {
-    var $this = this;
-
     if (
-      this.options.expandOnHover ||
+      this.$menuOptions.expandOnHover ||
       $('body').is(Selector.mini + Selector.layoutFixed)
     ) {
       this.expandOnHover();
@@ -49,19 +50,19 @@ class Menu {
     }
 
     $(Selector.contentWrapper).click(
-      function() {
+      (() => {
         // Enable hide menu when clicking on the content-wrapper on small screens
         if (
-          $(window).width() <= $this.options.collapseScreenSize &&
+          $(window).width() <= this.$menuOptions.collapseScreenSize &&
           $('body').hasClass(ClassName.open)
         ) {
-          $this.close();
+          this.close();
         }
-      }.bind(this.element)
+      }).bind(this.element)
     );
 
     // __Fix for android devices
-    $(Selector.searchInput).click(function(e) {
+    $(Selector.searchInput).click(e => {
       e.stopPropagation();
     });
   }
@@ -70,7 +71,7 @@ class Menu {
     var windowWidth = $(window).width();
     var isOpen = !$('body').hasClass(ClassName.collapsed);
 
-    if (windowWidth <= this.options.collapseScreenSize) {
+    if (windowWidth <= this.$menuOptions.collapseScreenSize) {
       isOpen = $('body').hasClass(ClassName.open);
     }
 
@@ -84,7 +85,7 @@ class Menu {
   open() {
     var windowWidth = $(window).width();
 
-    if (windowWidth > this.options.collapseScreenSize) {
+    if (windowWidth > this.$menuOptions.collapseScreenSize) {
       $('body')
         .removeClass(ClassName.collapsed)
         .trigger($.Event(Event.expanded));
@@ -97,7 +98,7 @@ class Menu {
 
   close() {
     var windowWidth = $(window).width();
-    if (windowWidth > this.options.collapseScreenSize) {
+    if (windowWidth > this.$menuOptions.collapseScreenSize) {
       $('body')
         .addClass(ClassName.collapsed)
         .trigger($.Event(Event.collapsed));
@@ -109,39 +110,37 @@ class Menu {
   }
 
   expandOnHover() {
-    var $this = this;
-
     $(Selector.mainSidebar).hover(
-      function() {
+      (() => {
         if (
           $('body').is(Selector.mini + Selector.collapsed) &&
-          $(window).width() > $this.options.collapseScreenSize
+          $(window).width() > this.$menuOptions.collapseScreenSize
         ) {
-          $this.expand();
+          this.expand();
         }
-      }.bind(this.element),
-      function() {
+      }).bind(this.element),
+      (() => {
         if ($('body').is(Selector.expanded)) {
-          $this.collapse();
+          this.collapse();
         }
-      }.bind(this.element)
+      }).bind(this.element)
     );
   }
 
   expand() {
-    setTimeout(function() {
+    setTimeout(() => {
       $('body')
         .removeClass(ClassName.collapsed)
         .addClass(ClassName.expanded);
-    }, this.options.expandTransitionDelay);
+    }, this.$menuOptions.expandTransitionDelay);
   }
 
   collapse() {
-    setTimeout(function() {
+    setTimeout(() => {
       $('body')
         .removeClass(ClassName.expanded)
         .addClass(ClassName.collapsed);
-    }, this.options.expandTransitionDelay);
+    }, this.$menuOptions.expandTransitionDelay);
   }
 }
 
@@ -149,16 +148,30 @@ function directive($menuOptions): ng.IDirective {
   return {
     replace: false,
     restrict: 'A',
+    scope: {
+      option: '@adMenuWrapper'
+    },
     link: (
       scope: any,
       instanceElement: JQLite,
       instanceAttributes: ng.IAttributes
     ) => {
-      new Menu(instanceElement, $.extend(Default, $menuOptions)).init();
+      $(document).on('click', Selector.button, function(e) {
+        e.preventDefault();
+        $(this).each(function() {
+          new MenuWrapper($(this), $menuOptions, 'toggle');
+        });
+      });
+
+      new MenuWrapper(
+        instanceElement.find(Selector.button),
+        $menuOptions,
+        scope.option
+      );
     }
   };
 }
 
 directive.$inject = ['$menuOptions'];
 
-mod.directive('adMenu', directive);
+mod.directive('adMenuWrapper', directive);

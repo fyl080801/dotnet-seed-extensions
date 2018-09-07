@@ -24,6 +24,7 @@ class ModuleClass {
 
     $stateProvider.state('admin.dashboard', {
       url: '/dashboard',
+      title: '首页',
       templateUrl:
         '/SeedModules.AdminPro/modules/admin/components/dashboard/view.html',
       requires: [

@@ -12,7 +12,7 @@ boot.constant('$menuOptions', {
 });
 
 boot.constant('$treeOptions', {
-  animationSpeed: 500,
+  animationSpeed: 250,
   accordion: true,
   followLink: false,
   trigger: '.treeview a'
