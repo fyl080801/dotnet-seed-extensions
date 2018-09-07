@@ -8,7 +8,7 @@
     <PackageReference Include="Seed.Module.Targets" Version="1.2.7" />
     <PackageReference Include="Seed.Mvc.Abstractions" Version="1.2.7" />
     <PackageReference Include="Seed.Project.Abstractions" Version="1.2.5" />
-    <PackageReference Include="SeedModules.Admin" Version="1.2.8" />
+    <PackageReference Include="SeedModules.Admin" Version="1.2.9" />
     <PackageReference Include="SeedModules.AngularUI" Version="1.2.8" />
     <PackageReference Include="SeedModules.Security" Version="1.2.7" />
   </ItemGroup>

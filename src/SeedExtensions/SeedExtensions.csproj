@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Seed.Application.All.Targets" Version="1.2.9" />
+    <PackageReference Include="Seed.Application.All.Targets" Version="1.2.10" />
     <PackageReference Include="Seed.Application.Targets" Version="1.2.7" />
     <PackageReference Include="Seed.Data" Version="1.2.7" />
     <PackageReference Include="Seed.Environment" Version="1.2.7" />
@@ -16,7 +16,7 @@
     <PackageReference Include="Seed.Project" Version="1.2.5" />
     <PackageReference Include="Seed.Security" Version="1.2.6" />
     <PackageReference Include="Seed.Yaml" Version="1.2.5" />
-    <PackageReference Include="SeedModules.Admin" Version="1.2.8" />
+    <PackageReference Include="SeedModules.Admin" Version="1.2.9" />
     <PackageReference Include="SeedModules.AngularUI" Version="1.2.8" />
     <PackageReference Include="SeedModules.Features" Version="1.2.6" />
     <PackageReference Include="SeedModules.Router" Version="1.2.6" />
