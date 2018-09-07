@@ -1,10 +1,12 @@
-define(["require", "exports", "angular", "app/application", "angular-ui-router", "SeedModules.AdminPro/modules/admin/configs/admin", "SeedModules.AdminPro/modules/admin/directives/body"], function (require, exports, angular) {
+define(["require", "exports", "angular", "app/application", "angular-ui-router", "SeedModules.AdminPro/modules/admin/configs/admin", "SeedModules.AdminPro/modules/admin/configs/route", "SeedModules.AdminPro/modules/admin/directives/body"], function (require, exports, angular) {
     "use strict";
     var ModuleClass = (function () {
         function ModuleClass($stateProvider, $urlRouterProvider) {
             $urlRouterProvider.otherwise('/admin/dashboard');
             $stateProvider.state('admin', {
                 url: '/admin',
+                title: '首页',
+                subtitle: 'Version 0.1',
                 templateUrl: '/SeedModules.AdminPro/modules/admin/components/layout/view.html',
                 requires: [
                     'SeedModules.AngularUI/modules/requires',
@@ -13,7 +15,8 @@ define(["require", "exports", "angular", "app/application", "angular-ui-router",
             });
             $stateProvider.state('admin.dashboard', {
                 url: '/dashboard',
-                title: '首页',
+                title: '监控面板',
+                subtitle: 'Dashboard',
                 templateUrl: '/SeedModules.AdminPro/modules/admin/components/dashboard/view.html',
                 requires: [
                     'SeedModules.AngularUI/modules/requires',

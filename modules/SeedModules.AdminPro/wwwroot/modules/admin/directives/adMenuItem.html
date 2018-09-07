@@ -1,0 +1,13 @@
+<a href="" ng-click="itemHandler('click', item, $event)">
+    <i class="{{getIcon(item)}}"></i>
+    <span>{{getTitle(item)}}</span>
+    <span class="pull-right-container" ng-if="hasChildren(item)">
+        <i class="fa fa-angle-left pull-right"></i>
+    </span>
+    <span class="pull-right-container" ng-if="!hasChildren(item) && hasLabel(item)">
+        <small class="label pull-right {{label.className}}" ng-repeat="label in getLabels(item)">{{label.text}}</small>
+    </span>
+</a>
+<ul class="treeview-menu" ng-if="hasChildren(item)">
+    <li ng-repeat="item in getChildren(item)" ng-include="'/SeedModules.AdminPro/modules/admin/directives/adMenuItem.html'"></li>
+</ul>
