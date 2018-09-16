@@ -36,13 +36,16 @@ class Controller {
         },
         {
           id: '2',
-          icon: 'fa fa-tachometer-alt',
+          icon: 'fa fa-briefcase',
           title: '分组1'
         },
         {
           id: '22',
           parentId: '2',
-          title: '监控台2'
+          title: '表格示例',
+          click: () => {
+            this.$state.go('admin.tabletest');
+          }
         }
       ])
       .key('id')
