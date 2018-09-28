@@ -36,6 +36,18 @@ class ModuleClass {
         'SeedModules.AdminPro/modules/admin/requires'
       ]
     });
+
+    $stateProvider.state('admin.tabletest', {
+      url: '/tabletest',
+      title: '表格',
+      subtitle: '看看表格样式是否自动适应',
+      templateUrl:
+        '/SeedModules.AdminPro/modules/admin/components/tabletest/view.html',
+      requires: [
+        'SeedModules.AngularUI/modules/requires',
+        'SeedModules.AdminPro/modules/admin/requires'
+      ]
+    });
   }
 }
 
