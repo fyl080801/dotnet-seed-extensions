@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
     <PackageReference Include="Seed.Data.Abstractions" Version="1.2.8" />
     <PackageReference Include="Seed.Module.Targets" Version="1.2.8" />
     <PackageReference Include="Seed.Mvc.Abstractions" Version="1.2.8" />
