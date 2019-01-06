@@ -1,65 +1,89 @@
-<div class="seed-container hold-transition login-page" ng-controller="SeedModules.AdminPro/modules/login/controllers/login">
-    <form style="display:none">
-        <input type="password" />
-    </form>
-    <input type="password" style="width: 0; height: 0; float: left; visibility: hidden" />
-    <div class="login-box">
-        <div class="login-logo">
-            <a href="">
-                <b>Seed</b>Admin
-            </a>
-        </div>
-        <!-- /.login-logo -->
-        <div class="login-box-body">
-            <p class="login-box-msg">登录你的会话</p>
-
-            <form name="loginform" role="form" ng-keyup="vm.enterlogin($event, loginform)">
-                <div class="form-group has-feedback">
-                    <input class="form-control" placeholder="账号" name="username" ng-model="data.username" required>
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                </div>
-                <div class="form-group has-feedback">
-                    <input type="password" class="form-control" placeholder="密码" name="password" ng-model="data.password" autocomplete="new-password"
-                        required>
-                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                </div>
-                <div class="row">
-                    <div class="col-xs-8">
-                        <div class="checkbox icheck">
-                            <label class="">
-                                <div class="icheckbox_square-blue" aria-checked="false" aria-disabled="false" style="position: relative;">
-                                    <input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">
-                                    <ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-                                </div>
-                                记住用户
-                            </label>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-xs-4">
-                        <button type="button" class="btn btn-primary btn-block btn-flat" ng-disabled="loginform.$invalid" ng-click="vm.login()">登录</button>
-                    </div>
-                    <!-- /.col -->
-                </div>
-            </form>
-
-            <div class="social-auth-links text-center">
-                <p>- 其他登录方式 -</p>
-                <a href="#" class="btn btn-block btn-social btn-facebook btn-flat">
-                    <i class="fab fa-facebook"></i>
-                    Sign in using Facebook
-                </a>
-                <a href="#" class="btn btn-block btn-social btn-google btn-flat">
-                    <i class="fab fa-google-plus"></i>
-                    Sign in using Google+
-                </a>
-            </div>
-            <!-- /.social-auth-links -->
-
-            <a href="">忘记密码</a><br>
-            <a href="" class="text-center" ng-click="vm.buildinginfo()">注册企业</a>
-
-        </div>
-        <!-- /.login-box-body -->
+<div
+  class="seed-container hold-transition login-page"
+  ng-controller="SeedModules.AdminPro/modules/login/controllers/login"
+>
+  <form style="display:none"><input type="password" /></form>
+  <input type="password" style="width: 0; height: 0; float: left; visibility: hidden" />
+  <div class="login-box">
+    <div class="login-logo">
+      <a href=""> <b>Seed</b>Admin </a>
     </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+      <p class="login-box-msg">登录你的会话</p>
+
+      <form name="loginform" role="form" ng-keyup="vm.enterlogin($event, loginform)">
+        <div class="form-group has-feedback">
+          <input class="form-control" placeholder="账号" name="username" ng-model="data.username" required />
+          <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+          <input
+            type="password"
+            class="form-control"
+            placeholder="密码"
+            name="password"
+            ng-model="data.password"
+            autocomplete="new-password"
+            required
+          />
+          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="row">
+          <div class="col-xs-8">
+            <div class="checkbox icheck">
+              <label class="">
+                <div
+                  class="icheckbox_square-blue"
+                  aria-checked="false"
+                  aria-disabled="false"
+                  style="position: relative;"
+                >
+                  <input
+                    type="checkbox"
+                    style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"
+                  />
+                  <ins
+                    class="iCheck-helper"
+                    style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"
+                  ></ins>
+                </div>
+                记住用户
+              </label>
+            </div>
+          </div>
+          <!-- /.col -->
+          <div class="col-xs-4">
+            <button
+              type="button"
+              class="btn btn-primary btn-block btn-flat"
+              ng-disabled="loginform.$invalid"
+              ng-click="vm.login()"
+            >
+              登录
+            </button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+
+      <div class="social-auth-links text-center">
+        <p>- 其他登录方式 -</p>
+        <a
+          href="https://gitee.com/oauth/authorize?client_id=3fa59d9d2ffdf2cb9059e2012b05a0652514e14e0725abee3adf6e0e585cd2f1&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fapi%2Foauth%2Fcallback&response_type=code"
+          class="btn btn-block btn-social btn-facebook btn-flat"
+        >
+          <i class="fab fa-facebook"></i> Sign in using Facebook
+        </a>
+        <a href="#" class="btn btn-block btn-social btn-google btn-flat">
+          <i class="fab fa-google-plus"></i> Sign in using Google+
+        </a>
+      </div>
+      <!-- /.social-auth-links -->
+
+      <a href="">忘记密码</a><br />
+      <a href="" class="text-center" ng-click="vm.buildinginfo()">注册企业</a>
+    </div>
+    <!-- /.login-box-body -->
+  </div>
 </div>
