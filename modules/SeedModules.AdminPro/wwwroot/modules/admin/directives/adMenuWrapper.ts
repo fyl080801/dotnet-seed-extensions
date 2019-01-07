@@ -2,12 +2,6 @@ import mod = require('SeedModules.AdminPro/modules/admin/module');
 
 var DataKey = 'lte.pushmenu';
 
-var Default = {
-  collapseScreenSize: 767,
-  expandOnHover: false,
-  expandTransitionDelay: 200
-};
-
 var Selector = {
   collapsed: '.sidebar-collapse',
   open: '.sidebar-open',

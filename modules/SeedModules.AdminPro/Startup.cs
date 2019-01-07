@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using Seed.Data;
 using Seed.Environment.Engine;
 using Seed.Modules;
 using SeedModules.AdminPro.Extensions;
+using SeedModules.AngularUI.Rendering;
 using System;
 
 namespace SeedModules.AdminPro
@@ -24,6 +26,8 @@ namespace SeedModules.AdminPro
 
         public override void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IRouteReferenceProvider, RouteReferences>();
+            services.AddScoped<IEntityTypeConfigurationProvider, EntityTypeConfigurations>();
             services.AddProAuthenticationServices(_dataProtectionProvider, _tenantName, _prefix);
         }
 

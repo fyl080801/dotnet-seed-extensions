@@ -5,7 +5,9 @@ class Controller {
     '$scope',
     '$state',
     '$stateParams',
+    '$window',
     'app/services/treeUtility',
+    'SeedModules.AngularUI/modules/services/requestService',
     'app/services/popupService'
   ];
 
@@ -13,7 +15,9 @@ class Controller {
     private $scope,
     private $state: ng.ui.IStateService,
     private $stateParams: ng.ui.IStateParamsService,
+    private $window: ng.IWindowService,
     private treeUtility: app.services.ITreeUtility,
+    private requestService: AngularUI.services.IRequestService,
     private popupService: app.services.IPopupService
   ) {
     $scope.vm = this;
@@ -23,24 +27,29 @@ class Controller {
     treeUtility
       .toTree([
         {
-          id: 'aaaa',
+          id: '1',
           icon: 'fa fa-tachometer-alt',
-          title: '监控台'
-        },
-        {
-          id: 'bbb',
-          parentId: 'aaaa',
-          title: '监控台1',
+          title: '监控台',
           click: () => {
             this.$state.go('admin.dashboard');
+          }
+        },
+        {
+          id: '2',
+          icon: 'fa fa-briefcase',
+          title: '分组1'
+        },
+        {
+          id: '22',
+          parentId: '2',
+          title: '表格示例',
+          click: () => {
+            this.$state.go('admin.tabletest');
           }
         }
       ])
       .key('id')
       .parentKey('parentId')
-      .onEach(item => {
-        console.log(item);
-      })
       .result.then(result => {
         $scope.menus = result.$children;
       });
@@ -51,7 +60,17 @@ class Controller {
   }
 
   logout() {
-    this.popupService.confirm('是否退出？').ok(() => {});
+    this.popupService.confirm('是否退出？').ok(() => {
+      this.requestService
+        .url('/api/account/logout')
+        .options({
+          dataOnly: true
+        })
+        .post()
+        .result.then(() => {
+          this.$window.location.reload();
+        });
+    });
   }
 }
 

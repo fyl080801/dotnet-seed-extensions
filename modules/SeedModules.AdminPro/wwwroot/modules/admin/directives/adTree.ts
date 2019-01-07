@@ -13,6 +13,7 @@ var Selector = {
 };
 
 var ClassName = {
+  active: 'active',
   open: 'menu-open',
   tree: 'tree'
 };
@@ -57,6 +58,7 @@ function directive($treeOptions): ng.IDirective {
       $treeOptions.animationSpeed,
       (() => {
         $(element).trigger(expandedEvent);
+        parent.addClass(ClassName.active);
       }).bind(element)
     );
   }
@@ -65,12 +67,14 @@ function directive($treeOptions): ng.IDirective {
     var collapsedEvent = $.Event(Event.collapsed);
 
     //tree.find(Selector.open).removeClass(ClassName.open);
+
     parentLi.removeClass(ClassName.open);
     tree.slideUp(
       $treeOptions.animationSpeed,
       (() => {
         //tree.find(Selector.open + ' > ' + Selector.treeview).slideUp();
         $(element).trigger(collapsedEvent);
+        parentLi.removeClass(ClassName.active);
       }).bind(element)
     );
   }
