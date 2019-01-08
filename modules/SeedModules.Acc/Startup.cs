@@ -28,7 +28,7 @@ namespace SeedModules.Acc
             });
             services.AddScoped<IEntityTypeConfigurationProvider, EntityTypeConfigurations>();
 
-            //services.AddSignalR();
+            services.AddSignalR();
         }
 
         public override void Configure(IApplicationBuilder app, IRouteBuilder routes, IServiceProvider serviceProvider)
@@ -37,10 +37,13 @@ namespace SeedModules.Acc
 
             app.UseCors("acc_cors");
 
-            //app.UseSignalR(cfg =>
-            //{
-            //    cfg.MapHub<TestHub>("/chatHub");
-            //});
+            app.UseSignalR(cfg =>
+            {
+                cfg.MapHub<TestHub>("/chatHub", options =>
+                {
+
+                });
+            });
         }
     }
 }
