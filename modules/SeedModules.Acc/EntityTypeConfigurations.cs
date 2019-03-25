@@ -15,7 +15,8 @@ namespace SeedModules.Acc
                 new EquipmentTypeConfiguration(),
                 new EquipmentCategoryTypeConfiguration(),
                 new EquipmentTypeTypeConfiguration(),
-                new LocationTypeConfiguration()
+                new LocationTypeConfiguration(),
+                new TeamTypeConfiguration()
             }.AsEnumerable());
         }
     }
