@@ -24,7 +24,8 @@ namespace SeedModules.Acc
                 new ExternalPersonalTypeConfiguration(),
                 new CompanyTypeConfiguration(),
                 new AgreementTypeConfiguration(),
-                new CompanyAccountTypeConfiguration()
+                new CompanyAccountTypeConfiguration(),
+                new InspectionApplyTypeConfiguration()
             }.AsEnumerable());
         }
     }
