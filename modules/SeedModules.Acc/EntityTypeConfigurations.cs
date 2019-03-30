@@ -16,7 +16,15 @@ namespace SeedModules.Acc
                 new EquipmentCategoryTypeConfiguration(),
                 new EquipmentTypeTypeConfiguration(),
                 new LocationTypeConfiguration(),
-                new TeamTypeConfiguration()
+                new TeamTypeConfiguration(),
+                new ConstructionApplyTypeConfiguration(),
+                new ConstructionReportTypeConfiguration(),
+                new ConstructionApplyJobareaTypeConfiguration(),
+                new ConstructionPersonTypeConfiguration(),
+                new ExternalPersonalTypeConfiguration(),
+                new CompanyTypeConfiguration(),
+                new AgreementTypeConfiguration(),
+                new CompanyAccountTypeConfiguration()
             }.AsEnumerable());
         }
     }

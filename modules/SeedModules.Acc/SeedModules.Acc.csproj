@@ -10,6 +10,7 @@
     <PackageReference Include="Seed.Data.Abstractions" Version="1.2.8" />
     <PackageReference Include="Seed.Module.Targets" Version="1.2.8" />
     <PackageReference Include="Seed.Mvc.Abstractions" Version="1.2.8" />
+    <PackageReference Include="SeedModules.Security" Version="1.2.8" />
   </ItemGroup>
 
 </Project>
