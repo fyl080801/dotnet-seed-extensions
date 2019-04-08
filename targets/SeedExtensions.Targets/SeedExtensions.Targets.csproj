@@ -8,6 +8,7 @@
     <ProjectReference Include="..\..\modules\SeedModules.Acc\SeedModules.Acc.csproj" />
     <ProjectReference Include="..\..\modules\SeedModules.AdminPro\SeedModules.AdminPro.csproj" />
     <ProjectReference Include="..\..\modules\SeedModules.CarManage\SeedModules.CarManage.csproj" />
+    <ProjectReference Include="..\..\modules\SeedModules.AssetsManage\SeedModules.AssetsManage.csproj" />
   </ItemGroup>
 
 </Project>

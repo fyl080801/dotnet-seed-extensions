@@ -32,6 +32,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeedModules.CarManage", "mo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedModules.AdminPro", "modules\SeedModules.AdminPro\SeedModules.AdminPro.csproj", "{BE810936-A60F-4BD0-895C-82E98D375FA8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedModules.AssetsManage", "modules\SeedModules.AssetsManage\SeedModules.AssetsManage.csproj", "{69DB0C65-1D88-4090-A514-91BE9C6DF0DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,10 @@ Global
 		{BE810936-A60F-4BD0-895C-82E98D375FA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE810936-A60F-4BD0-895C-82E98D375FA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE810936-A60F-4BD0-895C-82E98D375FA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69DB0C65-1D88-4090-A514-91BE9C6DF0DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69DB0C65-1D88-4090-A514-91BE9C6DF0DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69DB0C65-1D88-4090-A514-91BE9C6DF0DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69DB0C65-1D88-4090-A514-91BE9C6DF0DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +74,7 @@ Global
 		{C117FE0D-11E3-4DDA-A2CA-A85CDA7E79B7} = {0AB79810-0F29-499B-90B1-2125D23B0BBB}
 		{40A1F25A-026F-454D-902F-20DE44FEFB8C} = {DE6DEA35-28DE-483F-BCF6-27D775F10B55}
 		{BE810936-A60F-4BD0-895C-82E98D375FA8} = {DE6DEA35-28DE-483F-BCF6-27D775F10B55}
+		{69DB0C65-1D88-4090-A514-91BE9C6DF0DD} = {DE6DEA35-28DE-483F-BCF6-27D775F10B55}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7413C3D6-7E4B-419A-9B1F-08F01FE2CB9C}
